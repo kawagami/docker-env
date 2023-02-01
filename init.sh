@@ -10,3 +10,5 @@ sed -e "s/DB_HOST=.*/DB_HOST=database/" -i ./.env
 sed -e "s/DB_DATABASE=.*/DB_DATABASE=kawa/" -i ./.env
 sed -e "s/DB_USERNAME=.*/DB_USERNAME=kawa/" -i ./.env
 sed -e "s/DB_PASSWORD=.*/DB_PASSWORD=kawa/" -i ./.env
+
+sudo chmod -R 777 storage
