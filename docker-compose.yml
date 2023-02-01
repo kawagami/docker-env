@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
     working_dir: /var/www
     volumes:
-      - ./laravel:/var/www
+      - ./laravel:/var/www/laravel
     container_name: my-app
     environment:
       # laravel uses Dotenv to set and load environment variables,by default it will not
@@ -24,10 +24,13 @@ services:
     container_name: my-nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./vue.conf:/etc/nginx/conf.d/vue.conf
+      - ./vue:/var/www/vue
     volumes_from:
       - app
     ports:
       - 80:80
+      - 81:81
 
   # The Database
   database:
