@@ -6,10 +6,11 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
-    working_dir: /var/www
+    working_dir: /var/www/laravel
     volumes:
       - ./laravel:/var/www/laravel
     container_name: my-app
+    user: 1000:1000
     environment:
       # laravel uses Dotenv to set and load environment variables,by default it will not
       # overwrite existing environment variables. So we set env variables for app container here
