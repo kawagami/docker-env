@@ -33,11 +33,22 @@ services:
       # ssl
       # - /etc/letsencrypt/live/kawa.homes/fullchain.pem:/var/www/certbot/fullchain.pem
       # - /etc/letsencrypt/live/kawa.homes/privkey.pem:/var/www/certbot/privkey.pem
+      # go
+      - ./nginx/go.conf:/etc/nginx/conf.d/go.conf
     volumes_from:
       - app
     ports:
       - 80:80
       - 443:443
+
+  # go
+  golang:
+    build:
+      context: ./golang
+      dockerfile: Dockerfile
+    container_name: my-go
+    ports:
+      - 9090:9090
 
   # The Database
   database:
