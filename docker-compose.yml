@@ -4,13 +4,15 @@ services:
   # The Application
   app:
     build:
+      args:
+        user: kawa
+        uid: 1000
       context: ./php
       dockerfile: Dockerfile
     working_dir: /var/www/laravel
     volumes:
       - ../laravel:/var/www/laravel
     container_name: my-app
-    user: 1000:1000
     environment:
       # laravel uses Dotenv to set and load environment variables,by default it will not
       # overwrite existing environment variables. So we set env variables for app container here
@@ -28,9 +30,9 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       # dev 用的
       - ./nginx/dev.conf:/etc/nginx/conf.d/default.conf
-      # https 用的
+      # # https 用的
       # - ./nginx/https.conf:/etc/nginx/conf.d/default.conf
-      # ssl
+      # # ssl
       # - /etc/letsencrypt/live/kawa.homes/fullchain.pem:/var/www/certbot/fullchain.pem
       # - /etc/letsencrypt/live/kawa.homes/privkey.pem:/var/www/certbot/privkey.pem
     volumes_from:
