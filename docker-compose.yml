@@ -35,11 +35,20 @@ services:
       # # ssl
       # - /etc/letsencrypt/live/kawa.homes/fullchain.pem:/var/www/certbot/fullchain.pem
       # - /etc/letsencrypt/live/kawa.homes/privkey.pem:/var/www/certbot/privkey.pem
+      # rust
+      - ./nginx/rust.conf:/etc/nginx/conf.d/rust.conf
     volumes_from:
       - app
     ports:
       - 80:80
       - 443:443
+
+  rust:
+    image: kawagami77/rust-rocket-server:latest
+    working_dir: /var/www/rust
+    container_name: my-rust
+    # ports:
+    #   - 8000:8000
 
   # The Database
   database:
