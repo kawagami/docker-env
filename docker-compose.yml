@@ -44,7 +44,7 @@ services:
       - 443:443
 
   rust:
-    image: kawagami77/rust-rocket-server:latest
+    image: kawagami77/tokio-tungstenite-chat:latest
     working_dir: /var/www/rust
     container_name: my-rust
     # ports:
