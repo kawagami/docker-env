@@ -25,6 +25,9 @@ services:
     image: nginx:alpine
     working_dir: /var/www
     container_name: my-nginx
+    volumes:
+      # 基本 conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     volumes_from:
       - app
     ports:
