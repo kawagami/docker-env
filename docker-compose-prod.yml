@@ -1,0 +1,6 @@
+services:
+  nginx:
+    volumes:
+      - ./nginx/https.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt/live/kawa.homes/fullchain.pem:/var/www/certbot/fullchain.pem
+      - /etc/letsencrypt/live/kawa.homes/privkey.pem:/var/www/certbot/privkey.pem
