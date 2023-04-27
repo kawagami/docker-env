@@ -34,6 +34,12 @@ services:
       - 80:80
       - 443:443
 
+  # The Nginx Server
+  rust:
+    image: kawagami77/rust-thumbor
+    working_dir: /var/www/rust
+    container_name: my-rust
+
   # The Database
   database:
     image: postgres:latest
