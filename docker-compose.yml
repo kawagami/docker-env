@@ -34,9 +34,9 @@ services:
       - 80:80
       - 443:443
 
-  # The Nginx Server
+  # The thumbor Server
   rust:
-    image: kawagami77/rust-thumbor
+    image: kawagami77/rust-thumbor-distroless
     working_dir: /var/www/rust
     container_name: my-rust
 
