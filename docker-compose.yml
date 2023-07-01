@@ -58,8 +58,8 @@ services:
   surrealdb:
     image: surrealdb/surrealdb:latest
     container_name: my-surrealdb
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
     volumes:
       - ../surrealdbdata:/surrealdbdata
     command: start --user root --pass ${ROOTPASSWORD} file:/surrealdbdata/mydatabase.db
