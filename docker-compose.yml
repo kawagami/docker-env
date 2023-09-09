@@ -37,10 +37,10 @@ services:
       - 443:443
 
   # The thumbor Server
-  rust:
-    image: kawagami77/rust-thumbor-distroless
-    working_dir: /var/www/rust
-    container_name: my-rust
+  # rust:
+  #   image: kawagami77/rust-thumbor-distroless
+  #   working_dir: /var/www/rust
+  #   container_name: my-rust
 
   # The Database
   database:
