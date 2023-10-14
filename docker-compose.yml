@@ -12,6 +12,7 @@ services:
     working_dir: /var/www/laravel
     volumes:
       - ../laravel:/var/www/laravel
+      - ./php/php.ini-development-10M:/usr/local/etc/php/conf.d/php-development-10M.ini
     container_name: my-app
     environment:
       # laravel uses Dotenv to set and load environment variables,by default it will not
