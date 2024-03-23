@@ -1,0 +1,9 @@
+services:
+  nginx:
+    volumes:
+      - ./next-blog/dev.conf:/etc/nginx/conf.d/next-blog.conf
+  next-blog:
+    image: kawagami77/my-next-blog:latest
+    container_name: next-blog
+    working_dir: /app
+    stop_grace_period: 1s
