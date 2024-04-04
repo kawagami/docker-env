@@ -7,3 +7,5 @@ services:
     container_name: next-blog
     working_dir: /app
     stop_grace_period: 1s
+    volumes:
+      - ./next-blog/.env.production:/app/.env.production
