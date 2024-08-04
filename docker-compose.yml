@@ -14,8 +14,8 @@ services:
       - ../laravel:/var/www/laravel
       - ./php/php.ini-development-10M:/usr/local/etc/php/conf.d/php-development-10M.ini
     container_name: my-app
-    command: ["php", "artisan", "schedule:work"]
-    stop_grace_period: 2s
+    # command: ["php", "artisan", "schedule:work"]
+    # stop_grace_period: 2s
     environment:
       # laravel uses Dotenv to set and load environment variables,by default it will not
       # overwrite existing environment variables. So we set env variables for app container here
