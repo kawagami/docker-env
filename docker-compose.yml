@@ -22,9 +22,6 @@ services:
         php-fpm
     stop_grace_period: 2s
     environment:
-      # laravel uses Dotenv to set and load environment variables,by default it will not
-      # overwrite existing environment variables. So we set env variables for app container here
-      # then laravel will use these env values instead of the same env variables  defined in .env file.
       - "DB_PORT=5432"
       - "DB_HOST=database"
 
@@ -36,23 +33,15 @@ services:
     volumes:
       # 基本 conf
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      # surrealdb
-      - ./nginx/surrealdb.conf:/etc/nginx/conf.d/surrealdb.conf
     volumes_from:
       - app
     ports:
       - 80:80
       - 443:443
 
-  # The thumbor Server
-  # rust:
-  #   image: kawagami77/rust-thumbor-distroless
-  #   working_dir: /var/www/rust
-  #   container_name: my-rust
-
   # The Database
   database:
-    image: postgres:latest
+    image: postgres:16-alpine
     container_name: my-pgsql
     volumes:
       - ../dbdata:/var/lib/postgresql/data
@@ -62,15 +51,18 @@ services:
       - "POSTGRES_USER=kawa"
       - "POSTGRES_PASSWORD=kawa"
 
-  # for something test
-  surrealdb:
-    image: surrealdb/surrealdb:latest
-    container_name: my-surrealdb
-    # ports:
-    #   - "8000:8000"
+  # rust sqlx cli migrate tool
+  sqlx-cli:
+    restart: "no"
+    build:
+      context: ./sqlx-cli
+      dockerfile: Dockerfile
+    working_dir: /app
+    container_name: sqlx-cli
+    user: "${UID:-1000}:${GID:-1000}"
     volumes:
-      - ../surrealdbdata:/surrealdbdata
-    command: start --user root --pass ${ROOTPASSWORD} file:/surrealdbdata/mydatabase.db
+      - ./sqlx-cli/.env:/app/.env
+      - ./sqlx-cli/migrations:/app/migrations
 
 volumes:
   dbdata:
