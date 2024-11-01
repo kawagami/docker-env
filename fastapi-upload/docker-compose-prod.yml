@@ -1,0 +1,8 @@
+services:
+  fastapi-upload:
+    image: kawagami77/fastapi-upload:latest
+    container_name: fastapi-upload
+    volumes:
+      - ./fastapi-upload/my-credentials.json:/app/my-credentials.json
+    env_file:
+      - .env
