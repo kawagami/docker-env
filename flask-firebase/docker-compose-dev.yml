@@ -1,8 +1,0 @@
-services:
-  firebase:
-    image: kawagami77/flask-firebase:latest
-    container_name: firebase
-    volumes:
-      - ./flask-firebase/my-credentials.json:/app/my-credentials.json
-    env_file:
-      - .env
