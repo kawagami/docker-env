@@ -1,5 +1,0 @@
-services:
-  nginx:
-    volumes:
-      - ./vue/vue.dev.conf:/etc/nginx/conf.d/vue.conf
-      - ./vue/dist:/var/www/vue/dist
