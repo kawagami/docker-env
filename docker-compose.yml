@@ -14,12 +14,6 @@ services:
       - ../laravel:/var/www/laravel
       - ./php/php.ini-development-10M:/usr/local/etc/php/conf.d/php-development-10M.ini
     container_name: my-app
-    command:
-      - /bin/sh
-      - -c
-      - |
-        php artisan schedule:work &
-        php-fpm
     stop_grace_period: 2s
     environment:
       - "DB_PORT=5432"
