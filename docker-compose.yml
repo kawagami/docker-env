@@ -1,24 +1,4 @@
-# docker-compose.yml
-version: '3'
 services:
-  # The Application
-  app:
-    build:
-      args:
-        user: kawa
-        uid: 1000
-      context: ./php
-      dockerfile: Dockerfile
-    working_dir: /var/www/laravel
-    volumes:
-      - ../laravel:/var/www/laravel
-      - ./php/php.ini-development-10M:/usr/local/etc/php/conf.d/php-development-10M.ini
-    container_name: my-app
-    stop_grace_period: 2s
-    environment:
-      - "DB_PORT=5432"
-      - "DB_HOST=database"
-
   # The Nginx Server
   nginx:
     image: nginx:alpine
@@ -27,8 +7,6 @@ services:
     volumes:
       # 基本 conf
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    volumes_from:
-      - app
     ports:
       - 80:80
       - 443:443

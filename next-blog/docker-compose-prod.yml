@@ -1,7 +1,7 @@
 services:
   nginx:
     volumes:
-      - ./next-blog/prod.conf:/etc/nginx/conf.d/next-blog.conf
+      - ./next-blog/prod.conf:/etc/nginx/conf.d/default.conf
   next-blog:
     image: kawagami77/my-next-blog:latest
     container_name: next-blog
