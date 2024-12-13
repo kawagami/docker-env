@@ -1,5 +1,0 @@
-services:
-  nginx:
-    volumes:
-      - ./sg-vite/sg-vite.conf:/etc/nginx/conf.d/sg-vite.conf
-      - ../sg-vite/dist:/var/www/sg-vite/dist
