@@ -33,9 +33,7 @@ services:
   # rust sqlx cli migrate tool
   sqlx-cli:
     restart: "no"
-    build:
-      context: ./sqlx-cli
-      dockerfile: Dockerfile
+    image: kawagami77/rust-sqlx-cli:latest
     working_dir: /app
     container_name: sqlx-cli
     user: "${UID:-1000}:${GID:-1000}"
