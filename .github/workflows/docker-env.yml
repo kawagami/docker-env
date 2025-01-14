@@ -20,7 +20,6 @@ jobs:
         username: ${{ secrets.VULTR_USERNAME }}
         key: ${{ secrets.VULTR_SSH_KEY }}
         script: |
-          sh down.sh
           cd docker-env
           git pull
           cd ..
