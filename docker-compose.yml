@@ -43,6 +43,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    command: ["sqlx", "migrate", "run"]
 
   # https://microsoft.github.io/garnet/docs/welcome/releases#docker
   garnet:
