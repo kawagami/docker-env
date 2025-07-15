@@ -32,21 +32,6 @@ services:
       retries: 5
       start_period: 80s
 
-  # rust sqlx cli migrate tool
-  sqlx-cli:
-    restart: "no"
-    image: kawagami77/rust-sqlx-cli:latest
-    working_dir: /app
-    container_name: sqlx-cli
-    user: "${UID:-1000}:${GID:-1000}"
-    volumes:
-      - ./sqlx-cli/.env:/app/.env
-      - ./sqlx-cli/migrations:/app/migrations
-    depends_on:
-      database:
-        condition: service_healthy
-    # command: ["sqlx", "migrate", "run"]
-
   # https://microsoft.github.io/garnet/docs/welcome/releases#docker
   garnet:
     image: 'ghcr.io/microsoft/garnet'
@@ -55,6 +40,24 @@ services:
     # ports:
     #   - "6379:6379"
     container_name: garnet
+
+  vector:
+    image: timberio/vector:latest-alpine # 使用 Vector 的官方 Docker 映像
+    container_name: vector
+    volumes:
+      - ./vector.yaml:/etc/vector/vector.yaml:ro # 掛載您的組態檔
+      - /var/run/docker.sock:/var/run/docker.sock:ro # 允許 Vector 存取 Docker socket 以讀取日誌
+    command: ["--config", "/etc/vector/vector.yaml"] # 指定使用組態檔啟動 Vector
+    depends_on:
+      - api-server-axum
+      - nginx
+      - database
+    restart: on-failure # 確保 Vector 在失敗時重啟
+    logging:
+      driver: "json-file" # 可以也讓 Vector 的日誌輸出到 json-file driver
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   dbdata:

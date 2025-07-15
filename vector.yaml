@@ -1,0 +1,18 @@
+# vector.yaml
+sources:
+  axum_logs:
+    type: docker_logs
+    include_containers: ["api-server-axum"] # 根據您的 service 名稱調整
+  nginx_logs:
+    type: docker_logs
+    include_containers: ["nginx"] # 根據您的 service 名稱調整
+  pgsql_logs:
+    type: docker_logs
+    include_containers: ["database"] # 根據您的 service 名稱調整
+
+sinks:
+  console_output:
+    type: console
+    inputs: ["axum_logs", "nginx_logs", "pgsql_logs"]
+    encoding:
+      codec: json # 或者其他您偏好的格式，如 text, parquet 等
