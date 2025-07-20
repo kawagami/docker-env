@@ -3,18 +3,21 @@ services:
   nginx:
     image: nginx:alpine
     working_dir: /var/www
-    container_name: my-nginx
+    container_name: nginx
     volumes:
       # 基本 conf
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
       - 443:443
+    depends_on:
+      api-server-axum:
+        condition: service_started
 
   # The Database
   database:
     image: postgres:17-alpine
-    container_name: my-pgsql
+    container_name: database
     volumes:
       - ../dbdata:/var/lib/postgresql/data
     environment:
@@ -47,17 +50,52 @@ services:
     volumes:
       - ./vector.yaml:/etc/vector/vector.yaml:ro # 掛載您的組態檔
       - /var/run/docker.sock:/var/run/docker.sock:ro # 允許 Vector 存取 Docker socket 以讀取日誌
-    command: ["--config", "/etc/vector/vector.yaml"] # 指定使用組態檔啟動 Vector
+    # environment:
+    #   - VECTOR_LOG=debug
+    command: ["--config", "/etc/vector/vector.yaml"]
     depends_on:
-      - api-server-axum
-      - nginx
-      - database
+      api-server-axum:
+        condition: service_started
+      nginx:
+        condition: service_started
+      database:
+        condition: service_started
+      # loki:
+      #   condition: service_healthy
     restart: on-failure # 確保 Vector 在失敗時重啟
     logging:
       driver: "json-file" # 可以也讓 Vector 的日誌輸出到 json-file driver
       options:
         max-size: "10m"
         max-file: "3"
+
+  # # --- 新增 Loki 服務 ---
+  # loki:
+  #   container_name: loki
+  #   image: grafana/loki:3.5.2
+  #   ports:
+  #     - "3100:3100" # Loki 的預設 API 埠
+  #   command: -config.file=/etc/loki/local-config.yaml
+  #   volumes:
+  #     - ./loki-config.yaml:/etc/loki/local-config.yaml # 掛載 Loki 設定檔
+  #     - ./loki-data:/loki # 持久化 Loki 資料
+  #   healthcheck:
+  #     test: ["CMD", "wget", "--spider", "-q", "http://localhost:3100/ready"]
+  #     interval: 5s
+  #     timeout: 3s
+  #     retries: 5
+
+  # # --- 新增 Grafana 服務 ---
+  # grafana:
+  #   container_name: grafana
+  #   image: grafana/grafana:main
+  #   ports:
+  #     - "3310:3000" # Grafana 的預設 Web UI 埠
+  #   volumes:
+  #     - ./grafana-data:/var/lib/grafana # 持久化 Grafana 資料和配置
+  #     - ./grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml # 自動配置 Loki 資料來源
+  #   depends_on:
+  #     - loki # 確保 Loki 在 Grafana 之前啟動
 
 volumes:
   dbdata:

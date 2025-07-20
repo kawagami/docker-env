@@ -1,4 +1,5 @@
 # vector.yaml
+
 sources:
   axum_logs:
     type: docker_logs
@@ -10,9 +11,32 @@ sources:
     type: docker_logs
     include_containers: ["database"] # 根據您的 service 名稱調整
 
+# transforms:
+#   enrich_log:
+#     type: remap
+#     inputs: ["axum_logs", "nginx_logs", "pgsql_logs"]
+#     source: |
+#       .timestamp = now()
+#       .service_name = .label."com.docker.compose.service"
+
 sinks:
   console_output:
     type: console
     inputs: ["axum_logs", "nginx_logs", "pgsql_logs"]
     encoding:
       codec: json # 或者其他您偏好的格式，如 text, parquet 等
+
+  # # 新增的 Loki sink
+  # loki_sink:
+  #   type: loki
+  #   inputs: ["enrich_log"]
+  #   endpoint: "http://loki:3100"
+  #   path: /loki/api/v1/push
+  #   encoding:
+  #     codec: json
+  #     # timestamp_key: timestamp
+  #   labels:
+  #     project: "kawa_project"
+  #     container_name: "{{ container_name }}"
+  #     service_name: "{{ service_name }}"
+  #   remove_label_fields: true
