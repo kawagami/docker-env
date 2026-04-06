@@ -8,6 +8,7 @@ services:
     working_dir: /app
     volumes:
       - ./api-server-axum/.env:/app/.env
+      - ./api-server-axum/uploads:/app/uploads
     depends_on:
       database:
         condition: service_healthy
