@@ -44,30 +44,30 @@ services:
     #   - "6379:6379"
     container_name: garnet
 
-  vector:
-    image: timberio/vector:latest-alpine # 使用 Vector 的官方 Docker 映像
-    container_name: vector
-    volumes:
-      - ./vector.yaml:/etc/vector/vector.yaml:ro # 掛載您的組態檔
-      - /var/run/docker.sock:/var/run/docker.sock:ro # 允許 Vector 存取 Docker socket 以讀取日誌
-    # environment:
-    #   - VECTOR_LOG=debug
-    command: ["--config", "/etc/vector/vector.yaml"]
-    depends_on:
-      api-server-axum:
-        condition: service_started
-      nginx:
-        condition: service_started
-      database:
-        condition: service_started
-      # loki:
-      #   condition: service_healthy
-    restart: on-failure # 確保 Vector 在失敗時重啟
-    logging:
-      driver: "json-file" # 可以也讓 Vector 的日誌輸出到 json-file driver
-      options:
-        max-size: "10m"
-        max-file: "3"
+  # vector:
+  #   image: timberio/vector:latest-alpine # 使用 Vector 的官方 Docker 映像
+  #   container_name: vector
+  #   volumes:
+  #     - ./vector.yaml:/etc/vector/vector.yaml:ro # 掛載您的組態檔
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro # 允許 Vector 存取 Docker socket 以讀取日誌
+  #   # environment:
+  #   #   - VECTOR_LOG=debug
+  #   command: ["--config", "/etc/vector/vector.yaml"]
+  #   depends_on:
+  #     # api-server-axum:
+  #     #   condition: service_started
+  #     nginx:
+  #       condition: service_started
+  #     database:
+  #       condition: service_started
+  #     # loki:
+  #     #   condition: service_healthy
+  #   restart: on-failure # 確保 Vector 在失敗時重啟
+  #   logging:
+  #     driver: "json-file" # 可以也讓 Vector 的日誌輸出到 json-file driver
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "3"
 
   # # --- 新增 Loki 服務 ---
   # loki:
