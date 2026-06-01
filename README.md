@@ -24,7 +24,6 @@ docker-env/
 │   ├── docker-compose-prod.yml
 │   ├── prod.conf
 │   └── .env.production
-├── sqlx-cli/migrations/            # DB migration 檔案
 └── shells/                         # 常用腳本
 ```
 
