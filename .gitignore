@@ -4,3 +4,4 @@ flask-firebase/*.json
 fastapi-upload/*.json
 grafana-data
 loki-data
+nginx/cloudflare.ini
