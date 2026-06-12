@@ -9,6 +9,7 @@ services:
     volumes:
       - ./api-server-axum/.env:/app/.env
       - ./api-server-axum/uploads:/app/uploads
+      - ./api-server-axum/torrents:/app/torrents
     depends_on:
       database:
         condition: service_healthy
