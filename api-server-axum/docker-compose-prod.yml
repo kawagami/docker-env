@@ -3,7 +3,7 @@ services:
     volumes:
       - ./api-server-axum/prod.conf:/etc/nginx/conf.d/api-server-axum.conf
   api-server-axum:
-    image: kawagami77/api-server:axum
+    image: kawagami77/api-server:latest
     container_name: api-server-axum
     working_dir: /app
     volumes:

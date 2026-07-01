@@ -7,7 +7,7 @@
 | nginx | nginx:alpine | 反向代理 |
 | database | postgres:17-alpine | 資料庫 |
 | valkey | valkey/valkey:alpine | Cache（Redis 相容） |
-| api-server-axum | kawagami77/api-server:axum | Rust/Axum 後端 |
+| api-server-axum | kawagami77/api-server:latest | Rust/Axum 後端 |
 | next-blog | kawagami77/my-next-blog:latest | Next.js 前端 |
 | certbot | certbot/dns-cloudflare | Let's Encrypt 憑證自動更新 |
 
